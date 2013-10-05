@@ -33,7 +33,7 @@ Gui, Font,, Lucida Console
 Gui, Add, Text, ,
 (
 +--------------------+
-|  colemak_nav v0.1  |
+|  colemak_nav v0.2  |
 +--------------------+
 
 Colemak layout with CapsLock navigation.
@@ -54,8 +54,10 @@ The following keys send along held Shift/Ctrl/Alt.
  C-a   |  Home
  C-e   |  End
  C-d   |  Del
+ C-M-d |  Ctrl+Del
  C-h   |  Backspace
-
+ C-M-h |  Ctrl+Backspace
+ C-Esc |  CapsLock OFF
 
 The following keys ignore held Shift/Ctrl/Alt.
 
@@ -193,8 +195,8 @@ CapsLock & a::Send_Modifiers("{Home}")
 CapsLock & k::Send_Modifiers("{End}")
 
 ;; Deletion
-CapsLock & g::Send_Modifiers("{Del}")
-CapsLock & h::Send_Modifiers("{Backspace}")
+CapsLock & g::SendAlt_Modifiers("{Del}", "^{Del}")
+CapsLock & h::SendAlt_Modifiers("{Backspace}", "^{Backspace}")
 
 ;; Misc
 CapsLock & d::Send ^{f}
@@ -203,6 +205,9 @@ CapsLock & o::Send ^{v}
 CapsLock & /::SendShift("^{z}", "^{y}")
 CapsLock & t::Send {ESC}
 CapsLock & m::Send {Appskey}
+
+;; Fix CapsLocks sticking
+CapsLock & ESC::SetCapsLockState, AlwaysOff
 #IfWinNotActive
 
 ;;;; Otherwise, rebind CapsLock to Ctrl for emacs

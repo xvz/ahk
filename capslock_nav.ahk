@@ -29,7 +29,7 @@ Gui, Font,, Lucida Console
 Gui, Add, Text, ,
 (
 +---------------------+
-|  capslock_nav v0.1  |
+|  capslock_nav v0.2  |
 +---------------------+
 
 Denote C as CapsLock, M as Alt, S as Shift.
@@ -48,8 +48,10 @@ The following keys send along held Shift/Ctrl/Alt.
  C-a   |  Home
  C-e   |  End
  C-d   |  Del
+ C-M-d |  Ctrl+Del
  C-h   |  Backspace
-
+ C-M-h |  Ctrl+Backspace
+ C-Esc |  CapsLock OFF
 
 The following keys ignore held Shift/Ctrl/Alt.
 
@@ -158,8 +160,8 @@ CapsLock & a::Send_Modifiers("{Home}")
 CapsLock & e::Send_Modifiers("{End}")
 
 ;; Deletion
-CapsLock & d::Send_Modifiers("{Del}")
-CapsLock & h::Send_Modifiers("{Backspace}")
+CapsLock & d::SendAlt_Modifiers("{Del}", "^{Del}")
+CapsLock & h::SendAlt_Modifiers("{Backspace}", "^{Backspace}")
 
 ;; Misc
 CapsLock & s::Send ^{f}
@@ -168,6 +170,9 @@ CapsLock & y::Send ^{v}
 CapsLock & /::SendShift("^{z}", "^{y}")
 CapsLock & g::Send {ESC}
 CapsLock & m::Send {Appskey}
+
+;; Fix CapsLocks sticking
+CapsLock & ESC::SetCapsLockState, AlwaysOff
 #IfWinNotActive
 
 ;;;; Otherwise, rebind CapsLock to Ctrl for emacs
